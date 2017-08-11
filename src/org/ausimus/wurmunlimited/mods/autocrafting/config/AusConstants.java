@@ -1,4 +1,4 @@
-package org.ausimus.wurmunlimited.mods.autocrafting;
+package org.ausimus.wurmunlimited.mods.autocrafting.config;
 
 /*
      ___          ___          ___                     ___          ___          ___
@@ -14,40 +14,16 @@ package org.ausimus.wurmunlimited.mods.autocrafting;
     \/__/        \/__/        \/__/                   \/__/        \/__/        \/__/
 */
 
-import com.wurmonline.server.items.AusItemTemplateCreator;
-import org.gotti.wurmunlimited.modloader.interfaces.*;
-
-import java.util.Properties;
-
-public class Initiator implements WurmServerMod, ItemTemplatesCreatedListener, Initable, Configurable, ServerPollListener{
-    /**
-     * @param properties properties
-     */
-    @Override
-    public void configure(Properties properties) {
-
-    }
-
-    @Override
-    public void onItemTemplatesCreated() {
-        new AusItemTemplateCreator();
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void preInit() {
-
-    }
-
-    // Timed logic depends on this.
-    @Override
-    public void onServerPoll() {
-
-    }
-
-
+public interface AusConstants
+{
+    int CraftingWorkBenchTemplateID = 16000;
+    int InputTemplateID = 16001;
+    int OutputTemplateID = 16002;
+    int BIG = 65535;
+    int SMALL = 1;
+    int NONE = 0;
+    float HARD = 100.0F;
+    float MEDIUM = HARD / 2;
+    float EASY = MEDIUM / 2;
+    int NOSKILL = -10;
 }
