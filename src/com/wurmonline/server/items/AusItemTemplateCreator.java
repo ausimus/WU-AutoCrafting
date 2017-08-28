@@ -54,7 +54,8 @@ public class AusItemTemplateCreator {
                                     ItemTypes.ITEM_TYPE_NEVER_SHOW_CREATION_WINDOW_OPTION,
                                     ItemTypes.ITEM_TYPE_PLANTABLE,
                                     ItemTypes.ITEM_TYPE_USES_SPECIFIED_CONTAINER_VOLUME,
-                                    ItemTypes.ITEM_TYPE_NOBANK
+                                    ItemTypes.ITEM_TYPE_NOBANK,
+                                    ItemTypes.ITEM_TYPE_HASDATA
                             },
                     (short) IconConstants.ICON_COOKER_FORGE,
                     BehaviourList.fireBehaviour,
@@ -138,7 +139,8 @@ public class AusItemTemplateCreator {
                                     ItemTypes.ITEM_TYPE_NEVER_SHOW_CREATION_WINDOW_OPTION,
                                     ItemTypes.ITEM_TYPE_NOT_SPELL_TARGET,
                                     ItemTypes.ITEM_TYPE_NOBANK,
-                                    ItemTypes.ITEM_TYPE_NOT_MISSION
+                                    ItemTypes.ITEM_TYPE_NOT_MISSION,
+                                    ItemTypes.ITEM_TYPE_NOPUT
                             },
                     (short) IconConstants.ICON_COPPER_STILL,
                     BehaviourList.itemBehaviour,
