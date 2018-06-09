@@ -21,15 +21,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@SuppressWarnings("unused")
-public class AusLogger {
+public class AusLogger
+{
 
     /**
      * @param data Whats logged
-     * @param dir The directory / file in which the log is stored
+     * @param dir  The directory / file in which the log is stored
      **/
-    public static void WriteLog(String data, String dir) {
-        try {
+    public static void WriteLog(String data, String dir)
+    {
+        try
+        {
             FileWriter writeLog = new FileWriter(dir, true);
             BufferedWriter bufferedLogWriter = new BufferedWriter(writeLog);
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -38,7 +40,9 @@ public class AusLogger {
             bufferedLogWriter.write(data + "\n");
             bufferedLogWriter.write("==========================================================\n");
             bufferedLogWriter.close();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }

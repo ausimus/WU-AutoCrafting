@@ -27,9 +27,12 @@ import java.io.IOException;
 
 import static org.ausimus.wurmunlimited.mods.autocrafting.config.AusConstants.*;
 
-public class AusItemTemplateCreator {
-    public AusItemTemplateCreator() {
-        try {
+public class AusItemTemplateCreator
+{
+    public AusItemTemplateCreator()
+    {
+        try
+        {
             // Machine
             ItemTemplateCreator.createItemTemplate(
                     AusConstants.CraftingWorkBenchTemplateID,
@@ -66,7 +69,8 @@ public class AusItemTemplateCreator {
                     BIG,
                     NOSKILL,
                     MiscConstants.EMPTY_BYTE_PRIMITIVE_ARRAY,
-                    "model.container.still.",
+                    // ToDo Make a perdy model.
+                    "model.container.still.copper.",
                     EASY,
                     SMALL,
                     ItemMaterials.MATERIAL_IRON,
@@ -157,7 +161,9 @@ public class AusItemTemplateCreator {
                     ItemMaterials.MATERIAL_IRON,
                     MonetaryConstants.COIN_SILVER,
                     false);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }

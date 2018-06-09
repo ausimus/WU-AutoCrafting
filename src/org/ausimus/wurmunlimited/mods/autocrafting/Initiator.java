@@ -16,20 +16,24 @@ package org.ausimus.wurmunlimited.mods.autocrafting;
 
 import com.wurmonline.server.items.AusItemTemplateCreator;
 import org.ausimus.wurmunlimited.mods.autocrafting.config.AusConstants;
-import org.ausimus.wurmunlimited.mods.autocrafting.poller.PollWorkBench;
+import org.ausimus.wurmunlimited.mods.autocrafting.poller.pollInputs;
+import org.ausimus.wurmunlimited.mods.autocrafting.poller.pollOutputs;
 import org.gotti.wurmunlimited.modloader.interfaces.*;
 
 import java.util.Properties;
 
-public class Initiator implements WurmServerMod, ItemTemplatesCreatedListener, Initable, Configurable, ServerPollListener{
+public class Initiator implements WurmServerMod, ItemTemplatesCreatedListener, Initable, Configurable, ServerPollListener
+{
 
-    private long lastPollWorkBench = 0;
+    private long lastPollWorkBenchin;
+    private long lastPollWorkBenchout;
 
     /**
      * @param properties properties
      */
     @Override
-    public void configure(Properties properties) {
+    public void configure(Properties properties)
+    {
         AusConstants.CraftingWorkBenchTemplateID = Integer.parseInt(properties.getProperty("CraftingWorkBenchTemplateID", Integer.toString(AusConstants.CraftingWorkBenchTemplateID)));
         AusConstants.InputTemplateID = Integer.parseInt(properties.getProperty("InputTemplateID", Integer.toString(AusConstants.InputTemplateID)));
         AusConstants.OutputTemplateID = Integer.parseInt(properties.getProperty("OutputTemplateID", Integer.toString(AusConstants.OutputTemplateID)));
@@ -38,27 +42,37 @@ public class Initiator implements WurmServerMod, ItemTemplatesCreatedListener, I
     }
 
     @Override
-    public void onItemTemplatesCreated() {
+    public void onItemTemplatesCreated()
+    {
         new AusItemTemplateCreator();
     }
 
     @Override
-    public void init() {
+    public void init()
+    {
 
     }
 
     @Override
-    public void preInit() {
+    public void preInit()
+    {
 
     }
 
     @Override
-    public void onServerPoll() {
+    public void onServerPoll()
+    {
         long second = 1000L;
-        if (System.currentTimeMillis() - second * AusConstants.pollInterval > lastPollWorkBench)
+        if (System.currentTimeMillis() - second * AusConstants.pollInterval > lastPollWorkBenchin)
         {
-            new PollWorkBench();
-            lastPollWorkBench = System.currentTimeMillis();
+            new pollInputs();
+            lastPollWorkBenchin = System.currentTimeMillis();
+        }
+
+        if (System.currentTimeMillis() - second * AusConstants.pollInterval > lastPollWorkBenchout)
+        {
+            new pollOutputs();
+            lastPollWorkBenchout = System.currentTimeMillis();
         }
     }
 }
