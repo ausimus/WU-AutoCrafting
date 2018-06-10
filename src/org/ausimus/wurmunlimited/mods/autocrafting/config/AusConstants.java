@@ -14,6 +14,8 @@ package org.ausimus.wurmunlimited.mods.autocrafting.config;
     \/__/        \/__/        \/__/                   \/__/        \/__/        \/__/
 */
 
+import java.util.Locale;
+
 @SuppressWarnings({"WeakerAccess", /* Who are you to tell me how to spell Penus. */"SpellCheckingInspection"})
 public class AusConstants
 {
@@ -29,4 +31,6 @@ public class AusConstants
     public static float EASY = MEDIUM / 2;
     public static int NOSKILL = -10;
     public static boolean debug;
+    public static String logFile = "./mods/AutoCrafting/AutoCrafting".toLowerCase(Locale.ENGLISH) + ".log";
+    public static String dbFile = "./mods/AutoCrafting/AutoCrafting".toLowerCase(Locale.ENGLISH) + ".db";
 }

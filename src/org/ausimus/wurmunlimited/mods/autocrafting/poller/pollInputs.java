@@ -15,22 +15,49 @@ package org.ausimus.wurmunlimited.mods.autocrafting.poller;
 */
 
 import com.wurmonline.server.Items;
+import com.wurmonline.server.NoSuchItemException;
 import com.wurmonline.server.items.Item;
 import org.ausimus.wurmunlimited.mods.autocrafting.config.AusConstants;
+import org.ausimus.wurmunlimited.mods.autocrafting.config.AusLogger;
+import org.ausimus.wurmunlimited.mods.autocrafting.db.DBQuarys;
+
+import java.sql.SQLException;
 
 public class pollInputs
 {
     public pollInputs()
     {
-        for (Item item : Items.getAllItems())
+        Item[] items = Items.getAllItems();
+        for (Item item : items)
         {
             if (item.getTemplateId() == AusConstants.InputTemplateID)
             {
-                for (Item inside : item.getAllItems(true))
+                Item[] itemsInsideInput = item.getAllItems(true);
                 {
-                    if (inside.getTemplateId() >= 0)
+                    for (Item anItemsInsideInput : itemsInsideInput)
                     {
-                        Items.destroyItem(inside.getWurmId());
+                        try
+                        {
+                            Item parent = Items.getItem(anItemsInsideInput.getTopParent());
+                            try
+                            {
+                                DBQuarys.setStoredMatter(parent.getWurmId(), anItemsInsideInput.getWeightGrams() + DBQuarys.getStoredMatter(parent.getWurmId()));
+                                parent.setName(parent.getTemplate().getName() + " [" + String.valueOf(DBQuarys.getStoredMatter(parent.getWurmId())) + "]");
+                                parent.updateName();
+                                // Destroy item last, always last.
+                                Items.destroyItem(anItemsInsideInput.getWurmId());
+                            }
+                            catch (SQLException ex)
+                            {
+                                ex.printStackTrace();
+                                AusLogger.WriteLog(ex.getMessage(), AusConstants.logFile);
+                            }
+                        }
+                        catch (NoSuchItemException ex)
+                        {
+                            ex.printStackTrace();
+                            AusLogger.WriteLog(ex.getMessage(), AusConstants.logFile);
+                        }
                     }
                 }
             }
