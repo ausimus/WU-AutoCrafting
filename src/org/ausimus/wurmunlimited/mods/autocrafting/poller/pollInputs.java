@@ -41,7 +41,16 @@ public class pollInputs
                             Item parent = Items.getItem(anItemsInsideInput.getTopParent());
                             try
                             {
-                                DBQuarys.setStoredMatter(parent.getWurmId(), anItemsInsideInput.getWeightGrams() + DBQuarys.getStoredMatter(parent.getWurmId()));
+                                long value;
+                                if (AusConstants.useWeight)
+                                {
+                                    value = anItemsInsideInput.getWeightGrams() + DBQuarys.getStoredMatter(parent.getWurmId());
+                                }
+                                else
+                                {
+                                    value = anItemsInsideInput.getValue() + DBQuarys.getStoredMatter(parent.getWurmId());
+                                }
+                                DBQuarys.setStoredMatter(parent.getWurmId(), value);
                                 parent.setName(parent.getTemplate().getName() + " [" + String.valueOf(DBQuarys.getStoredMatter(parent.getWurmId())) + "]");
                                 parent.updateName();
                                 // Destroy item last, always last.

@@ -20,6 +20,7 @@ import java.util.Locale;
 public class AusConstants
 {
     public static int CraftingWorkBenchTemplateID/* = 16000*/;
+    public static boolean useWeight;
     public static int InputTemplateID/* = 16001*/;
     public static int OutputTemplateID/* = 16002*/;
     public static int pollInterval;

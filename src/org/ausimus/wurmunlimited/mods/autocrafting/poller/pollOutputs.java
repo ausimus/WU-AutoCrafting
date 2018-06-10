@@ -17,7 +17,6 @@ package org.ausimus.wurmunlimited.mods.autocrafting.poller;
 import com.wurmonline.server.Items;
 import com.wurmonline.server.items.Item;
 import com.wurmonline.server.items.ItemFactory;
-import com.wurmonline.server.items.ItemList;
 import org.ausimus.wurmunlimited.mods.autocrafting.config.AusConstants;
 import org.ausimus.wurmunlimited.mods.autocrafting.db.DBQuarys;
 
@@ -32,14 +31,33 @@ public class pollOutputs
                 if (item.getTemplateId() == AusConstants.OutputTemplateID)
                 {
                     Item parent = Items.getItem(item.getTopParent());
-                    Item toCreate = ItemFactory.createItem(ItemList.stoneBrick, parent.getQualityLevel(), null);
-                    if (DBQuarys.getStoredMatter(parent.getWurmId()) >= toCreate.getWeightGrams())
+                    Item[] subItems = item.getAllItems(true);
+                    if (subItems.length <= 99)
                     {
-                        long value = DBQuarys.getStoredMatter(parent.getWurmId()) - toCreate.getWeightGrams();
-                        item.insertItem(toCreate);
-                        DBQuarys.setStoredMatter(parent.getWurmId(), value);
-                        parent.setName(parent.getTemplate().getName() + " [" + String.valueOf(value) + "]");
-                        parent.updateName();
+                        if (parent.getData1() != -1)
+                        {
+                            Item toCreate = ItemFactory.createItem(parent.getData1(), parent.getQualityLevel(), null);
+                            boolean hasMatter;
+                            long value;
+                            if (AusConstants.useWeight)
+                            {
+                                hasMatter = DBQuarys.getStoredMatter(parent.getWurmId()) >= toCreate.getWeightGrams();
+                                value = DBQuarys.getStoredMatter(parent.getWurmId()) - toCreate.getWeightGrams();
+
+                            }
+                            else
+                            {
+                                hasMatter = DBQuarys.getStoredMatter(parent.getWurmId()) >= toCreate.getValue();
+                                value = DBQuarys.getStoredMatter(parent.getWurmId()) - toCreate.getValue();
+                            }
+                            if (hasMatter)
+                            {
+                                item.insertItem(toCreate);
+                                DBQuarys.setStoredMatter(parent.getWurmId(), value);
+                                parent.setName(parent.getTemplate().getName() + " [" + String.valueOf(value) + "]");
+                                parent.updateName();
+                            }
+                        }
                     }
                 }
             }
