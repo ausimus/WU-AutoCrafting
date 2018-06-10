@@ -15,6 +15,8 @@ package org.ausimus.wurmunlimited.mods.autocrafting.poller;
 */
 
 import com.wurmonline.server.Items;
+import com.wurmonline.server.MiscConstants;
+import com.wurmonline.server.economy.MonetaryConstants;
 import com.wurmonline.server.items.Item;
 import com.wurmonline.server.items.ItemFactory;
 import org.ausimus.wurmunlimited.mods.autocrafting.config.AusConstants;
@@ -36,19 +38,27 @@ public class pollOutputs
                     {
                         if (parent.getData1() != -1)
                         {
-                            Item toCreate = ItemFactory.createItem(parent.getData1(), parent.getQualityLevel(), null);
+                            Item toCreate = ItemFactory.createItem(parent.getData1(), parent.getQualityLevel(), parent.getAuxData(), MiscConstants.COMMON, null);
                             boolean hasMatter;
                             long value;
+                            long priceOverride;
+                            if (toCreate.getValue() < MonetaryConstants.COIN_SILVER)
+                            {
+                                priceOverride = MonetaryConstants.COIN_SILVER;
+                            }
+                            else
+                            {
+                                priceOverride = toCreate.getValue();
+                            }
                             if (AusConstants.useWeight)
                             {
                                 hasMatter = DBQuarys.getStoredMatter(parent.getWurmId()) >= toCreate.getWeightGrams();
                                 value = DBQuarys.getStoredMatter(parent.getWurmId()) - toCreate.getWeightGrams();
-
                             }
                             else
                             {
-                                hasMatter = DBQuarys.getStoredMatter(parent.getWurmId()) >= toCreate.getValue();
-                                value = DBQuarys.getStoredMatter(parent.getWurmId()) - toCreate.getValue();
+                                hasMatter = DBQuarys.getStoredMatter(parent.getWurmId()) >= priceOverride;
+                                value = DBQuarys.getStoredMatter(parent.getWurmId()) - priceOverride;
                             }
                             if (hasMatter)
                             {
