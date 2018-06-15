@@ -57,7 +57,7 @@ public class Initiator implements PreInitable, WurmServerMod, ItemTemplatesCreat
     @Override
     public void init()
     {
-        // Create ausDB files if they do not already exist, these are just plain text files.
+        // Create files if they do not already exist.
         try
         {
             File db = new File(AusConstants.dbFile);

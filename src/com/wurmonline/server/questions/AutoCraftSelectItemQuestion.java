@@ -14,7 +14,6 @@ import java.util.Properties;
 public final class AutoCraftSelectItemQuestion extends Question
 {
     private LinkedList<ItemTemplate> itemplates = new LinkedList<>();
-    private LinkedList<ItemMaterials> materials = new LinkedList<>();
     public AutoCraftSelectItemQuestion(Creature aResponder, String aTitle, String aQuestion, long aTarget)
     {
         super(aResponder, aTitle, aQuestion, 5, aTarget);
@@ -31,7 +30,6 @@ public final class AutoCraftSelectItemQuestion extends Question
         int width = 225;
         int height = 225;
         itemplates = new LinkedList<>();
-        materials = new LinkedList<>();
         StringBuilder buf = new StringBuilder(getBmlHeader());
         ItemTemplate[] templates = ItemTemplateFactory.getInstance().getTemplates();
         Arrays.sort(templates);
